@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidMentoringTask1</string>
+    <string name="field1_hint">Поле 1</string>
+    <string name="field2_hint">Поле 2</string>
+    <string name="plus">Плюс</string>
+    <string name="minus">Минус</string>
+    <string name="float_values">Использовать дробные числа</string>
+    <string name="singed_values">Использовать знаковые числа</string>
+    <string name="divide">Дилить</string>
+    <string name="multiple">Умножить</string>
+    <string name="calculate_result">Вычислить</string>
+    <string name="result">Результат</string>
+    <string name="no_singed_values_allowed">Числа со знаками не разрешены</string>
+    <string name="no_float_values_allowed">Дробные числа не разрешены</string>
+    <string name="no_operation_chosen">No operation choosen</string>
+    <string name="error">Error</string>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">AndroidMentoringTask1</string>
+    <string name="field1_hint">Field 1</string>
+    <string name="field2_hint">Field 2</string>
+    <string name="plus">Plus</string>
+    <string name="minus">Minus</string>
+    <string name="divide">Divide</string>
+    <string name="multiple">Multiple</string>
+    <string name="singed_values">Use singed numbers</string>
+    <string name="float_values">Use float numbers</string>
+    <string name="result">Result field</string>
+    <string name="calculate_result">Calculate result</string>
+    <string name="no_singed_values_allowed">No singed values allowed</string>
+    <string name="no_float_values_allowed">No float value allowed</string>
+    <string name="no_operation_chosen">No operation choosen</string>
+    <string name="error">Error</string>
+    <string name="clear_values_title">Clear values</string>
+    <string name="clear_values_message">Do you want to clean all values?</string>
+    <string name="clear_inputs_title">Clear inputs</string>
+</resources>
