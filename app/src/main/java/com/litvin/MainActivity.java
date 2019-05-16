@@ -25,6 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int OPERATION_NOT_FOUND = -1;
     private static final String FIELD1_VALUE = "field1_value";
     private static final String FIELD2_VALUE = "field2_value";
     private EditText field1;
@@ -81,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(FIELD1_VALUE, field1.getText().toString());
+        outState.putString(FIELD2_VALUE, field2.getText().toString());
         super.onSaveInstanceState(outState);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void crateOperationListeners() {
         RadioButton operationDivide = findViewById(R.id.operation_divide);
         RadioButton operationPlus = findViewById(R.id.operation_sum);
@@ -95,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
 
         CompoundButton.OnCheckedChangeListener onCheckedChangeListener = (buttonView, isChecked) -> {
             if (isChecked) {
-                radioButtons.stream()
-                        .filter(radioButton -> radioButton.getId() != buttonView.getId())
-                        .forEach(radioButton -> radioButton.setChecked(false));
+                for (RadioButton radioButton : radioButtons) {
+                    if (radioButton.getId() != buttonView.getId()) {
+                        radioButton.setChecked(false);
+                    }
+                }
             }
         };
         operationDivide.setOnCheckedChangeListener(onCheckedChangeListener);
@@ -167,8 +170,20 @@ public class MainActivity extends AppCompatActivity {
         EditText field1 = findViewById(R.id.field_1);
         EditText field2 = findViewById(R.id.field_2);
 
-        int checkedRadioButtonId = operationsGroup.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == -1) {
+        RadioButton plus = findViewById(R.id.operation_sum);
+        RadioButton minus = findViewById(R.id.operation_minus);
+        RadioButton divide = findViewById(R.id.operation_divide);
+        RadioButton multiply = findViewById(R.id.operation_multiple);
+
+        int checkedRadioButtonId = -1;
+        List<RadioButton> operations = Arrays.asList(plus, minus, divide, multiply);
+        for (RadioButton operation : operations) {
+            if (operation.isChecked()) {
+                checkedRadioButtonId = operation.getId();
+            }
+        }
+
+        if (checkedRadioButtonId == OPERATION_NOT_FOUND) {
             Snackbar.make(operationsGroup, R.string.no_operation_chosen, Snackbar.LENGTH_SHORT).show();
         } else {
             double value1 = Double.parseDouble(field1.getText().toString());
@@ -182,9 +197,6 @@ public class MainActivity extends AppCompatActivity {
                     result.setText(String.valueOf(value1 - value2));
                     break;
                 case R.id.operation_divide:
-                    if (value2 == 0.0) {
-                        throw new IllegalArgumentException("Zero");
-                    }
                     result.setText(String.valueOf(value1 / value2));
                     break;
                 case R.id.operation_multiple:

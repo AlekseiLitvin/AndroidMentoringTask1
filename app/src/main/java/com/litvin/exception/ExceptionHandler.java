@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
@@ -16,14 +17,16 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
         this.context = context;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         Intent intent = new Intent(context, ExceptionActivity.class);
         StackTraceElement[] stackTrace = e.getStackTrace();
-        String stacktraceString = Arrays.stream(stackTrace)
-                .map(StackTraceElement::toString)
-                .collect(Collectors.joining("\n"));
+        StringJoiner joiner = new StringJoiner("\n");
+        for (StackTraceElement stackTraceElement : stackTrace) {
+            String toString = stackTraceElement.toString();
+            joiner.add(toString);
+        }
+        String stacktraceString = joiner.toString();
         intent.putExtra(ExceptionActivity.STACKTRACE, stacktraceString);
         context.startActivity(intent);
         android.os.Process.killProcess(android.os.Process.myPid());
